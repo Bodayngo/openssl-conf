@@ -4,7 +4,7 @@
 * Creating the Server/Client Certificates
 
 ## Create the Root CA Certificate
-Create a root directory in which you will store your CA private keys and certificates. We will also create various other sub-directories needed for this process as well as the index.txt and serial files which used to keep track of signed certificates.
+Create a root directory in which you will store your CA private key and certificate. We will also create various other sub-directories needed for this process as well as the index.txt and serial files which used to keep track of signed certificates.
 ```
 mkdir /root/ca
 cd /root/ca
