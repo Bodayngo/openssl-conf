@@ -12,7 +12,7 @@ touch /root/ca/index.txt
 echo 1000 > /root/ca/serial
 ```
 ### Create root CA OpenSSL configuration file
-Create OpenSSL CA configuration file. Copy the contents of this example configuration file. Optionally, edit the defaults beneath [req_distinguished_name].
+Create OpenSSL CA configuration file. Copy the contents of [this](https://github.com/Bodayngo/openssl/blob/main/example-root-ca-config) example configuration file. Optionally, edit the defaults beneath [req_distinguished_name].
 ```
 nano /root/ca/openssl.cnf
 ```
