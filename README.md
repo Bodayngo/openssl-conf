@@ -49,4 +49,49 @@ touch /root/ca/intermediate/index.txt
 echo 1000 > /root/ca/intermediate/serial
 echo 1000 > /root/ca/intermediate/crlnumber
 ```
-Create OpenSSL intermediate configuration file. Copy the contents of [this]() example configuration file. As before, you can optionally edit the defaults beneath [req_distinguished_name].
+Create OpenSSL intermediate configuration file. Copy the contents of [this](https://github.com/Bodayngo/openssl/blob/main/example-intermediate-ca-config) example configuration file. As before, you can optionally edit the defaults beneath [req_distinguished_name].
+```
+nano /root/ca/intermediate/openssl.cnf
+```
+Generate the intermediate private key.
+```
+openssl genrsa -aes256 \
+      -out /root/ca/intermediate/private/intermediate.key.pem 4096
+```
+```
+chmod 400 /root/ca/intermediate/private/intermediate.key.pem
+```
+Create the intermediate CSR.
+```
+openssl req -config /root/ca/intermediate/openssl.cnf -new -sha256 \
+      -key /root/ca/intermediate/private/intermediate.key.pem \
+      -out /root/ca/intermediate/csr/intermediate.csr.pem
+```
+Sign the intermediate CSR to create the intermediate certificate.
+```
+openssl ca -config /root/ca/openssl.cnf -extensions v3_intermediate_ca \
+      -days 3650 -notext -md sha256 \
+      -in /root/ca/intermediate/csr/intermediate.csr.pem \
+      -out /root/ca/intermediate/certs/intermediate.cert.pem
+```
+```
+chmod 444 /root/ca/intermediate/certs/intermediate.cert.pem
+```
+Validate the contents of the intermediate certificate and and verify it against the root certificate.
+```
+openssl x509 -noout -text \
+      -in /root/ca/intermediate/certs/intermediate.cert.pem
+```
+```
+openssl verify -CAfile /root/ca/certs/ca.cert.pem \
+      /root/ca/intermediate/certs/intermediate.cert.pem
+```
+Create the certificate chain.
+```
+cat /root/ca/intermediate/certs/intermediate.cert.pem \
+      /root/ca/certs/ca.cert.pem > \
+      /root/ca/intermediate/certs/ca-chain.cert.pem
+```
+```
+chmod 444 /root/ca/intermediate/certs/ca-chain.cert.pem
+```
