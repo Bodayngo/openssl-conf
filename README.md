@@ -1,8 +1,7 @@
 ## Contents:
 * [Create the Root CA Certificate](https://github.com/Bodayngo/openssl/blob/main/README.md#create-the-root-ca-certificate)
-* [Creating the Intermediate Certificate](https://github.com/Bodayngo/openssl/blob/main/README.md#create-the-intermediate-ca-certificate)
-* Creating the Server Certificate
-* Creating the Client Certificate
+* [Create the Intermediate Certificate](https://github.com/Bodayngo/openssl/blob/main/README.md#create-the-intermediate-ca-certificate)
+* Creating the Server/Client Certificates
 
 ## Create the Root CA Certificate
 Create a root directory in which you will store your CA private keys and certificates. We will also create various other sub-directories needed for this process as well as the index.txt and serial files which used to keep track of signed certificates.
