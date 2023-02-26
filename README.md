@@ -1,6 +1,6 @@
 ##Contents:
 * [Create the Root CA Certificate](https://github.com/Bodayngo/openssl/blob/main/README.md#create-the-root-ca-certificate)
-* [Creating the Intermediate Certificate]
+* [Creating the Intermediate Certificate](https://github.com/Bodayngo/openssl/blob/main/README.md#create-the-intermediate-ca-certificate)
 * Creating the Server Certificate
 * Creating the Client Certificate
 
