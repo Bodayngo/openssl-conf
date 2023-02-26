@@ -1,5 +1,3 @@
-# openssl
-
 ## Create Root CA Certificate
 ### Prepare root CA directory structure
 Create a root directory in which you will store your CA private keys and certificates. We will also create various other sub-directories needed for this process as well as the index.txt and serial files which used to keep track of signed certificates.
