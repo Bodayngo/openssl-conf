@@ -49,3 +49,4 @@ touch /root/ca/intermediate/index.txt
 echo 1000 > /root/ca/intermediate/serial
 echo 1000 > /root/ca/intermediate/crlnumber
 ```
+Create OpenSSL intermediate configuration file. Copy the contents of [this]() example configuration file. As before, you can optionally edit the defaults beneath [req_distinguished_name].
