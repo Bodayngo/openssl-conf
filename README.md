@@ -125,3 +125,54 @@ cat /root/ca/intermediate/certs/intermediate.cert.pem \
 
 chmod 444 /root/ca/intermediate/certs/ca-chain.cert.pem
 ```
+## Create the Server/Client Certificates
+Generate the server/client private key.
+```
+openssl genrsa -aes256 \
+      -out /root/ca/intermediate/private/hostname.lab.local.key.pem 4096
+
+chmod 400 /root/ca/intermediate/private/hostname.lab.local.key.pem
+```
+Generate the server/client CSR.
+```
+openssl req -config /root/ca/intermediate/openssl.cnf \
+      -key /root/ca/intermediate/private/hostname.lab.local.key.pem \
+      -new -sha256 -out /root/ca/intermediate/csr/hostname.lab.local.csr.pem
+
+Enter pass phrase for hostname.lab.local.key.pem: password
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+-----
+Country Name (2 letter code) [US]:
+State or Province Name [North Dakota]:
+Locality Name [West Fargo]:
+Organization Name [Lab Org]:
+Organizational Unit Name [Lab]:
+Common Name []:hostname.lab.local
+Email Address [lab@lab.local]:
+```
+Sign the RADIUS server CSR with the intermediate CA.
+* Use the server_cert extenstion when signing a server certificate
+* Use the usr_cert extension when signing a client certificate
+```
+openssl ca -config /root/ca/intermediate/openssl.cnf \
+      -extensions server_cert -days 375 -notext -md sha256 \
+      -in /root/ca/intermediate/csr/hostname.lab.local.csr.pem \
+      -out /root/ca/intermediate/certs/hostname.lab.local.cert.pem
+
+Enter pass phrase for /root/ca/intermediate/private/intermediate.key.pem: password
+Sign the certificate? [y/n]: y
+1 out of 1 certificate requests certified, commit? [y/n]y
+
+chmod 444 /root/ca/intermediate/certs/hostname.lab.local.cert.pem
+```
+Validate the contents of the RADIUS server certificate and verify it against the previously created CA certificate chain.
+```
+openssl x509 -noout -text \
+      -in /root/ca/intermediate/certs/hostname.lab.local.cert.pem
+
+openssl verify -CAfile /root/ca/intermediate/certs/ca-chain.cert.pem \
+      /root/ca/intermediate/certs/hostname.lab.local.cert.pem
+
+hostname.lab.local.cert.pem: OK
+```
